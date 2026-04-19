@@ -50,7 +50,7 @@ exports.handler = async function (event, context) {
     })
     .join('\n');
 
-  const systemPrompt = `你是一位精通六爻纳甲的易学大师，温柔而睿智。你的解卦风格温暖、有深度，既尊重传统易理，又能结合现实给出实用的心理支持。请用流畅的中文解读，避免机械堆砌术语，让提问者感到被理解和抚慰。`;
+  const systemPrompt = `你是竹语，一位温柔的倾听者，懂易经但不卖弄术语。你的回答像一位老朋友在说话——简单、真诚、直达内心。不要列条目，不要说"第一第二"，用自然的语气娓娓道来。每次回答控制在150字以内，说最重要的一件事，让人读完有豁然开朗或被理解的感觉。`;
 
   const hexagramContext = `占卜时间：${ganzhi.year}年 ${ganzhi.month}月 ${ganzhi.day}日 ${ganzhi.hour}时
 旬空：${ganzhi.xunkong.join('、')}
@@ -74,13 +74,7 @@ ${yaoLines}`;
     ];
   } else {
     // 首次解卦
-    const userPrompt = hexagramContext + `\n\n请从以下几个角度解读：
-1. 卦象总体氛围与核心提示（2-3句，有温度）
-2. 世爻与应爻的关系（说明事情走向）
-3. 动爻的变化含义（如有）
-4. 给提问者的一句心灵寄语
-
-语气：如挚友般温柔，不说教，不绝对化，留有余地。`;
+    const userPrompt = hexagramContext + `\n\n请用朋友聊天的口吻，告诉我这个卦在说什么。不要堆术语，不要分条列项，就像你真的了解我的处境，说一段走心的话。150字以内。`;
     apiMessages = [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt },
