@@ -281,16 +281,25 @@ function getHexData() {
   };
 }
 
-// 追加一条 AI 气泡（返回 bubble 元素，用于流式更新）
-function appendAiMessage(initialText) {
+// 追加一条 AI 气泡，带加载动画，返回 { bubble, showLoading, hideLoading }
+function appendAiMessage() {
   const wrap = document.createElement('div');
   wrap.className = 'chat-msg-ai';
   const bubble = document.createElement('div');
   bubble.className = 'chat-bubble';
-  bubble.textContent = initialText;
+
+  const loader = document.createElement('div');
+  loader.className = 'ai-loading';
+  loader.innerHTML = '<div class="ai-spinner"></div><span>竹在观卦…</span>';
+  bubble.appendChild(loader);
+
   wrap.appendChild(bubble);
   aiMessages.appendChild(wrap);
-  return bubble;
+
+  return {
+    bubble,
+    hideLoading() { loader.remove(); },
+  };
 }
 
 // 追加一条用户气泡
@@ -326,18 +335,19 @@ interpretBtn.addEventListener('click', () => {
   aiChat.classList.remove('hidden');
   conversationHistory = [];
 
-  const bubble = appendAiMessage('');
+  const { bubble, hideLoading } = appendAiMessage();
   let fullText = '';
+  let firstChunk = true;
 
   const cursor = document.createElement('span');
   cursor.className = 'cursor-blink';
   cursor.textContent = '|';
-  bubble.appendChild(cursor);
 
   AI.interpret(
     currentResult.question,
     getHexData(),
     (char) => {
+      if (firstChunk) { hideLoading(); firstChunk = false; }
       fullText += char;
       bubble.textContent = fullText;
       bubble.appendChild(cursor);
@@ -351,6 +361,7 @@ interpretBtn.addEventListener('click', () => {
       scrollResultToBottom();
     },
     (err) => {
+      hideLoading();
       bubble.textContent = `解卦失败：${err.message}`;
       isAiThinking = false;
       interpretBtn.textContent = '问竹（重试）';
@@ -375,13 +386,13 @@ function sendFollowUp() {
   appendUserMessage(text);
   conversationHistory.push({ role: 'user', content: text });
 
-  const bubble = appendAiMessage('');
+  const { bubble, hideLoading } = appendAiMessage();
   let fullText = '';
+  let firstChunk = true;
 
   const cursor = document.createElement('span');
   cursor.className = 'cursor-blink';
   cursor.textContent = '|';
-  bubble.appendChild(cursor);
   scrollResultToBottom();
 
   AI.chat(
@@ -389,6 +400,7 @@ function sendFollowUp() {
     getHexData(),
     conversationHistory,
     (char) => {
+      if (firstChunk) { hideLoading(); firstChunk = false; }
       fullText += char;
       bubble.textContent = fullText;
       bubble.appendChild(cursor);
@@ -402,6 +414,7 @@ function sendFollowUp() {
       scrollResultToBottom();
     },
     (err) => {
+      hideLoading();
       bubble.textContent = `出错：${err.message}`;
       isAiThinking = false;
       aiSendBtn.disabled = false;
