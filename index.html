@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="竹语 — 六爻占卜，以易理观照内心，以AI温言解惑" />
+  <title>竹语 · 六爻占卜</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-wrapper">
+
+  <!-- ══ 屏幕一：提问 ══ -->
+  <div class="screen" id="screen-question">
+    <header class="site-header">
+      <h1 class="site-title">竹　語</h1>
+      <p class="site-subtitle">听竹纳音 · 以卦观心</p>
+      <div class="wind-chime" aria-hidden="true">
+        <div class="chime-bar"></div>
+        <div class="chime-bar"></div>
+        <div class="chime-bar"></div>
+        <div class="chime-bar"></div>
+        <div class="chime-bar"></div>
+      </div>
+    </header>
+
+    <div class="screen-body">
+      <section class="qigua-panel glass-card">
+        <p class="panel-title">静心，写下所问之事</p>
+
+        <div class="question-wrap">
+          <textarea
+            id="question-input"
+            rows="3"
+            placeholder="此刻心中有何困惑，想问卦象……"
+            maxlength="200"
+          ></textarea>
+          <div class="question-options" aria-label="快捷提问选项">
+            <button type="button" class="question-option" data-question="问学业">问学业</button>
+            <button type="button" class="question-option" data-question="问感情">问感情</button>
+            <button type="button" class="question-option" data-question="问事业">问事业</button>
+            <button type="button" class="question-option" data-question="问健康">问健康</button>
+          </div>
+        </div>
+
+        <button id="start-btn" type="button">起　卦</button>
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ 屏幕二：摇卦 ══ -->
+  <div class="screen" id="screen-coins">
+    <div class="screen-topbar">
+      <span class="topbar-title">竹　語</span>
+      <span class="topbar-slogan">听竹纳音 · 以卦观心</span>
+    </div>
+    <div class="screen-body">
+      <section id="coins-section" class="glass-card">
+        <div id="throw-header">
+          <span id="throw-num-label">第 <em id="throw-num">1</em> 次投掷</span>
+          <span class="throw-sep">·</span>
+          <span id="throw-yao-name">初爻</span>
+        </div>
+
+        <div id="coins-row"></div>
+        <div id="throw-result-text"></div>
+
+        <div id="throws-log"></div>
+
+        <div id="throw-actions">
+          <button id="next-throw-btn" class="hidden" type="button">摇下一卦</button>
+          <button id="view-hexagram-btn" class="hidden" type="button">查看卦象 →</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ══ 屏幕三：卦象 + AI ══ -->
+  <div class="screen" id="screen-result">
+    <div class="screen-topbar">
+      <span class="topbar-title">竹　語</span>
+      <span class="topbar-slogan">听竹纳音 · 以卦观心</span>
+      <button id="restart-btn" type="button">↺ 重新起卦</button>
+    </div>
+    <div class="result-scroll" id="result-scroll">
+      <div class="result-content">
+
+        <!-- 干支 -->
+        <section class="glass-card ganzhi-card">
+          <div class="cast-time" id="cast-time">—</div>
+          <div class="ganzhi-row">
+            <div class="ganzhi-item"><span>年</span><strong id="gz-year">—</strong></div>
+            <div class="ganzhi-item"><span>月</span><strong id="gz-month">—</strong></div>
+            <div class="ganzhi-item"><span>日</span><strong id="gz-day">—</strong></div>
+            <div class="ganzhi-item"><span>时</span><strong id="gz-hour">—</strong></div>
+            <div class="ganzhi-item"><span>旬空</span><strong id="gz-xunkong">—</strong></div>
+          </div>
+          <p class="question-display" id="question-display"></p>
+        </section>
+
+        <!-- 本卦 + 变卦 -->
+        <section id="hexagram-section" class="glass-card">
+          <div class="hexagram-display" id="hexagram-display">
+            <div class="hexagram-col" id="benkua-col">
+              <div class="kua-col-label">本　卦</div>
+              <div class="kua-col-name" id="benkua-name">—</div>
+              <div class="kua-col-gong" id="benkua-gong"></div>
+              <table class="yao-table" aria-label="本卦六爻">
+                <thead>
+                  <tr>
+                    <th>六神</th><th>六亲</th><th>地支</th>
+                    <th>五行</th><th>爻</th><th>动</th><th>世应</th>
+                  </tr>
+                </thead>
+                <tbody id="benkua-tbody"></tbody>
+              </table>
+            </div>
+            <div class="hexagram-col hidden" id="biankua-col">
+              <div class="kua-col-label bian-label">变　卦</div>
+              <div class="kua-col-name bian-name" id="biankua-name">—</div>
+              <div class="kua-col-gong" id="biankua-gong"></div>
+              <table class="yao-table" aria-label="变卦六爻">
+                <thead>
+                  <tr>
+                    <th>六神</th><th>六亲</th><th>地支</th>
+                    <th>五行</th><th>爻</th><th></th><th>世应</th>
+                  </tr>
+                </thead>
+                <tbody id="biankua-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI 解卦 + 对话 -->
+        <section id="ai-section" class="glass-card">
+          <!-- 首次解卦按钮 -->
+          <button id="interpret-btn" type="button">问竹（AI解卦）</button>
+
+          <!-- 对话区（首次解卦后显示） -->
+          <div id="ai-chat" class="hidden">
+            <div id="ai-messages"></div>
+            <div id="ai-input-row">
+              <textarea
+                id="ai-follow-input"
+                rows="1"
+                placeholder="继续向竹问询…"
+                maxlength="300"
+              ></textarea>
+              <button id="ai-send-btn" type="button" aria-label="发送">问</button>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- .result-content -->
+    </div>
+
+  </div>
+
+</div><!-- .app-wrapper -->
+
+<script src="lunar.js"></script>
+<script src="liuyao.js"></script>
+<script src="ai.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

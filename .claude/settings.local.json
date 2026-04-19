@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx serve *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(pkill -f \"npx serve\")",
+      "Bash(curl -s http://localhost:60299)",
+      "Read(//Users/dannisun/Downloads/**)",
+      "Bash(identify /Users/dannisun/Downloads/下载.webp)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/dannisun/Downloads/下载.webp)",
+      "Bash(sips -s format png /Users/dannisun/Downloads/下载.webp --out /tmp/coins_full.png)",
+      "Bash(sips -c 119 130 /tmp/coins_full.png --cropOffset 0 0 --out ./coin-front.png)",
+      "Bash(sips -c 119 129 /tmp/coins_full.png --cropOffset 0 130 --out ./coin-back.png)",
+      "Bash(sips *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/coin-front.png)",
+      "Bash(cp \"/tmp/MysticCoin/Mystic-Coin-Oracle-main/artifacts/liuyao-divination/public/coin-front.png\" /Users/dannisun/vibecoding/zhuyu/coin-front.png)",
+      "Bash(cp \"/tmp/MysticCoin/Mystic-Coin-Oracle-main/artifacts/liuyao-divination/public/coin-back.png\" /Users/dannisun/vibecoding/zhuyu/coin-back.png)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -o /Users/dannisun/Downloads/Mystic-Coin-Oracle-main.zip -d mystic-oracle)",
+      "Bash(node *)",
+      "Bash(npm pack *)",
+      "Bash(npm show *)",
+      "Bash(curl -s \"https://registry.npmjs.org/lunar-javascript/latest\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d['version']\\)\")",
+      "Bash(ls -la lunar-javascript-*.tgz)",
+      "Bash(tar -xzf lunar-javascript-1.7.7.tgz)"
+    ]
+  }
+}
