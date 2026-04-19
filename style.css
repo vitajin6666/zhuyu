@@ -25,7 +25,7 @@ body {
   color: var(--text-main);
   overflow: hidden;
   position: relative;
-  background-color: #7ba36f;
+  background-color: #8fa882;
   background-image: url('bamboo-bg.png');
   background-size: cover;
   background-position: center;
@@ -61,9 +61,8 @@ body::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(8,40,18,0.28) 0%, rgba(8,40,18,0.10) 34%, rgba(8,40,18,0.30) 100%),
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), transparent 45%),
-    radial-gradient(circle at 70% 10%, rgba(255,255,255,0.08), transparent 50%);
+    linear-gradient(180deg, rgba(8,40,18,0.10) 0%, rgba(8,40,18,0.03) 40%, rgba(8,40,18,0.10) 100%),
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.10), transparent 45%);
   pointer-events: none;
   z-index: 50;
 }
@@ -77,7 +76,7 @@ body::after {
   transition: transform 0.65s cubic-bezier(0.32, 0.72, 0, 1);
   will-change: transform;
   /* 每个屏幕独立承载背景，防止过渡时下方卡片透出 */
-  background-color: #7ba36f;
+  background-color: #8fa882;
   background-image: url('bamboo-bg.png');
   background-size: cover;
   background-position: center;
@@ -325,8 +324,6 @@ body::after {
   border-radius: 50%;
 }
 
-#throw-result-text { display: none; }
-
 /* 掷卦日志：6条全展示，按钮永远可见 */
 #throws-log {
   display: flex;
@@ -402,11 +399,6 @@ body::after {
 /* ═══════════════════════════════════════
    屏幕三：卦象 + AI
 ═══════════════════════════════════════ */
-
-#screen-result {
-  display: flex;
-  flex-direction: column;
-}
 
 /* 可滚动内容区 */
 .result-scroll {
@@ -764,7 +756,6 @@ body::after {
 
 /* ─── 工具 ─── */
 .hidden { display: none !important; }
-.fade-in { animation: fadeIn 0.5s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ─── 响应式：窄屏变卦堆叠 ─── */

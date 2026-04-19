@@ -10,7 +10,6 @@
 
 const TIANGAN = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
 const DIZHI   = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-const WUXING_TG = ['木', '木', '火', '火', '土', '土', '金', '金', '水', '水']; // 天干五行
 const WUXING_DZ = ['水', '土', '木', '木', '土', '火', '火', '土', '金', '金', '土', '水']; // 地支五行
 const JIAZI60 = [];
 for (let i = 0; i < 60; i++) {
@@ -26,12 +25,6 @@ const XUNKONG_MAP = {
   '甲辰': ['寅', '卯'],
   '甲寅': ['子', '丑'],
 };
-
-// 月建（寅月为正月，依次类推）
-const MONTH_DIZHI = ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'];
-
-// 时辰地支
-const HOUR_DIZHI = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 
 // ─────────────────────────────────────────────
 // 八宫卦及纳甲数据
@@ -242,7 +235,6 @@ const HEXAGRAMS = {
 // 六亲生克关系
 // 我克者为妻财，克我者为官鬼，生我者为父母，我生者为子孙，比和者为兄弟
 // ─────────────────────────────────────────────
-const WUXING_ORDER = ['木', '火', '土', '金', '水'];
 
 function wuxingSheng(a) {
   // a生的五行
@@ -272,14 +264,6 @@ function getLiuqin(gongWuxing, yaoWuxing) {
   // B与P相同 → 兄弟
   if (gongWuxing === yaoWuxing)                return '兄弟';
   return '兄弟';
-}
-
-/**
- * 从日柱干支（如"庚申"）提取日干五行
- */
-function getDayGanWuxing(dayGanzhi) {
-  const idx = TIANGAN.indexOf(dayGanzhi.charAt(0));
-  return idx >= 0 ? WUXING_TG[idx] : '土';
 }
 
 // ─────────────────────────────────────────────
@@ -474,7 +458,6 @@ function liuyaoQigua(date) {
   const biankua = getBiankua(lines, throws);
 
   const dayGan  = ganzhi.day.charAt(0);
-  const dayWx   = getDayGanWuxing(dayGan);
   const spirits = getSixSpirits(dayGan);
 
   // 计算本卦六爻详细信息

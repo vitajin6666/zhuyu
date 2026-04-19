@@ -18,7 +18,6 @@ const interpretBtn    = document.getElementById('interpret-btn');
 const throwNumEl      = document.getElementById('throw-num');
 const throwYaoNameEl  = document.getElementById('throw-yao-name');
 const coinsRow        = document.getElementById('coins-row');
-const throwResultText = document.getElementById('throw-result-text');
 const throwsLog       = document.getElementById('throws-log');
 const nextThrowBtn    = document.getElementById('next-throw-btn');
 const viewHexagramBtn = document.getElementById('view-hexagram-btn');
@@ -34,18 +33,6 @@ function showScreen(id) {
       s.classList.remove('screen-active');
       s.classList.add('screen-past');
     }
-  });
-}
-
-function resetToQuestion() {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('screen-active', 'screen-past');
-  });
-  document.getElementById('screen-question').style.transform = '';
-  document.getElementById('screen-question').classList.add('screen-active');
-  // 让 screen-question 的 class 生效
-  document.querySelectorAll('.screen:not(#screen-question)').forEach(s => {
-    s.classList.remove('screen-active', 'screen-past');
   });
 }
 
@@ -66,7 +53,6 @@ startBtn.addEventListener('click', async () => {
 
   // 重置摇卦区
   throwsLog.innerHTML = '';
-  throwResultText.textContent = '';
   nextThrowBtn.classList.add('hidden');
   viewHexagramBtn.classList.add('hidden');
 
@@ -81,7 +67,6 @@ startBtn.addEventListener('click', async () => {
   for (let i = 0; i < 6; i++) {
     throwNumEl.textContent     = i + 1;
     throwYaoNameEl.textContent = posNames[i];
-    throwResultText.textContent = '';
 
     await animateThrow(i, result.throws[i]);
     appendThrowLog(i, result.throws[i]);
