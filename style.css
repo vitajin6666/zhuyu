@@ -203,10 +203,16 @@ body::after {
 
 #question-input + .question-options { margin-top: 10px; }
 .question-options {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
   justify-content: center;
   gap: 8px;
-  flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+  .question-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .question-option { width: 100%; }
 }
 .question-option {
   appearance: none;
