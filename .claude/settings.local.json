@@ -24,7 +24,8 @@
       "Bash(curl -s \"https://registry.npmjs.org/lunar-javascript/latest\")",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d['version']\\)\")",
       "Bash(ls -la lunar-javascript-*.tgz)",
-      "Bash(tar -xzf lunar-javascript-1.7.7.tgz)"
+      "Bash(tar -xzf lunar-javascript-1.7.7.tgz)",
+      "Bash(git -C /Users/dannisun/vibecoding/zhuyu log --all --oneline --name-only)"
     ]
   }
 }
